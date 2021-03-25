@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.generated";
+option objc_class_prefix = "DM";
+
+package demoservice;
+
+service DemoServer {
+  rpc InvokeDemo (stream DemoRequest) returns (stream DemoReply);
+}
+
+message Chunk {
+        bytes Content = 1;
+}
+
+message DemoRequest {
+  string id = 1;
+  map<string, string> headers = 3;
+  bytes body = 4;
+  bool endOfStream = 5;
+}
+
+message DemoReply {
+  string id = 1;
+  map<string, string> headers = 2;
+  bytes body = 3;
+  bool endOfStream = 4;
+}
+
+// Server configuration
+message Config {
+  // The cluster name of the service.
+  string clustername = 1;
+
+  // The execution timeout.
+  uint32 timeout = 2;
+}
